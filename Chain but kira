@@ -1,0 +1,347 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "Chain But Kira | Testing Script",
+   Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+   LoadingTitle = "JOB APPLICATION",
+   LoadingSubtitle = "By TRoll",
+   Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+
+   ToggleUIKeybind = "K", -- The keybind to toggle the UI visibility (string like "K" or Enum.KeyCode)
+
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
+
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "Corn Hub"
+   },
+
+   Discord = {
+      Enabled = false, -- Prompt the user to join your Discord server if their executor supports it
+      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided", -- Use this to tell the user how to get a key
+      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+
+Rayfield:Notify({
+   Title = "This is Test Scrip",
+   Content = "Maybe, l no update the script?",
+   Duration = 6.5,
+   Image = nil,
+})
+
+local MainTab = Window:CreateTab("INF Stamina", nil) -- Title, Image
+local MainSection = MainTab:CreateSection("This is Test")
+
+local MainButton = MainTab:CreateButton({
+   Name = "INF Stamina",
+   Callback = function()
+    while true do
+-- Generated with Sigma Spy Github: https://github.com/depthso/Sigma-Spy
+-- Services
+local Players = game:GetService("Players")
+
+-- Remote
+local RemoteEvent = Players.LocalPlayer.Character.RagdollSCript.RemoteEvent -- RemoteEvent 
+
+-- This data was received from the server
+firesignal(RemoteEvent.OnClientEvent, 
+    "Stamina",
+    100,
+    100
+)
+wait(0.5)
+end
+   end,
+})
+
+local MainButton = MainTab:CreateButton({
+   Name = "INF CBTStamina",
+   Callback = function()
+   while true do
+game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CBTStamina.Value = (100)
+wait(0.5)
+end
+   end,
+})
+
+local MainButton = MainTab:CreateButton({
+   Name = "INF XSAW Gas",
+   Callback = function()
+   local player = game:GetService("Players").LocalPlayer
+
+-- Function to force Gas to 100
+local function lockGas(tool)
+    if not tool or not tool:FindFirstChild("Gas") then return end
+    
+    -- HACK: Override the Value property
+    local gas = tool.Gas
+    while true do
+        gas.Value = 100
+        task.wait(0.1) -- Small delay to prevent lag
+    end
+end
+
+-- Check Backpack & Character
+local function checkForTool()
+    -- Check Backpack
+    local backpack = player:FindFirstChildOfClass("Backpack")
+    if backpack then
+        local xsaw = backpack:FindFirstChild("XSAW")
+        if xsaw then lockGas(xsaw) end
+    end
+    
+    -- Check Character
+    local character = player.Character
+    if character then
+        local xsaw = character:FindFirstChild("XSAW")
+        if xsaw then lockGas(xsaw) end
+    end
+end
+
+-- Run when tool is added
+player.Backpack.ChildAdded:Connect(checkForTool)
+player.CharacterAdded:Connect(function()
+    checkForTool()
+end)
+
+-- Initial check
+checkForTool()
+   end,
+})
+
+local Main1Tab = Window:CreateTab("Unlock Blueprint", nil) -- Title, Image
+local Main1Section = Main1Tab:CreateSection("Work 100%")
+
+local Main1Button = Main1Tab:CreateButton({
+   Name = "Unlock All",
+   Callback = function()
+   game:GetService("Players").LocalPlayer.Blueprints.CombatKnifeTWO.Value = true
+   game:GetService("Players").LocalPlayer.Blueprints.Angelica.Value = true
+   game:GetService("Players").LocalPlayer.Blueprints.M1911.Value = true
+   game:GetService("Players").LocalPlayer.Blueprints.M1911TWO.Value = true
+   game:GetService("Players").LocalPlayer.Blueprints.Reficul.Value = true
+   game:GetService("Players").LocalPlayer.Blueprints.XSAW.Value = true
+   game:GetService("Players").LocalPlayer.Blueprints.MakeshiftAK.Value = true
+   game:GetService("Players").LocalPlayer.Blueprints.MacheteTWO.Value = true
+   end,
+})
+
+local Main1Button = Main1Tab:CreateButton({
+   Name = "Unlock CombatKnifeTWO",
+   Callback = function()
+   game:GetService("Players").LocalPlayer.Blueprints.CombatKnifeTWO.Value = true
+   end,
+})
+
+local Main1Button = Main1Tab:CreateButton({
+   Name = "Unlock Angelica",
+   Callback = function()
+   game:GetService("Players").LocalPlayer.Blueprints.Angelica.Value = true
+   end,
+})
+
+local Main1Button = Main1Tab:CreateButton({
+   Name = "Unlock M1911",
+   Callback = function()
+   game:GetService("Players").LocalPlayer.Blueprints.M1911.Value = true
+   end,
+})
+
+local Main1Button = Main1Tab:CreateButton({
+   Name = "Unlock M1911TWO",
+   Callback = function()
+   game:GetService("Players").LocalPlayer.Blueprints.M1911TWO.Value = true
+   end,
+})
+
+local Main1Button = Main1Tab:CreateButton({
+   Name = "Unlock Reficul",
+   Callback = function()
+   game:GetService("Players").LocalPlayer.Blueprints.Reficul.Value = true
+   end,
+})
+
+local Main1Button = Main1Tab:CreateButton({
+   Name = "Unlock XSAW",
+   Callback = function()
+   game:GetService("Players").LocalPlayer.Blueprints.XSAW.Value = true
+   end,
+})
+
+local Main1Button = Main1Tab:CreateButton({
+   Name = "Unlock MakeshiftAk",
+   Callback = function()
+   game:GetService("Players").LocalPlayer.Blueprints.MakeshiftAK.Value = true
+   end,
+})
+
+local Main1Button = Main1Tab:CreateButton({
+   Name = "Unlock Machete",
+   Callback = function()
+   game:GetService("Players").LocalPlayer.Blueprints.MacheteTWO.Value = true
+   end,
+})
+
+local Main2Tab = Window:CreateTab("ESP", nil) -- Title, Image
+local Main2Section = Main2Tab:CreateSection("Esp ltem or Npc")
+
+local Main2Button = Main2Tab:CreateButton({
+   Name = "Esp Scraps (no full)",
+   Callback = function()
+   local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Debris = game:GetService("Debris")
+
+local player = Players.LocalPlayer
+local scrapsFolder = workspace.Map.Interactable.Scraps
+local textColor = Color3.fromRGB(0, 255, 0)  -- Green color
+
+-- Table to track active ESP components
+local activeESP = {}
+local activeScraps = {}
+
+-- Function to create ESP for a scrap
+local function createScrapESP(scrap)
+    -- Skip if already has ESP
+    if activeESP[scrap] then return end
+    
+    -- Create ESP components
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "ScrapESP"
+    billboard.AlwaysOnTop = true
+    billboard.Size = UDim2.new(0, 100, 0, 20)  -- Very compact
+    billboard.StudsOffset = Vector3.new(0, 1.8, 0)
+    billboard.Adornee = scrap
+    billboard.Parent = scrap
+    
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Name = "ESPLabel"
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.BackgroundTransparency = 1
+    textLabel.TextColor3 = textColor
+    textLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+    textLabel.TextStrokeTransparency = 0.7
+    textLabel.TextSize = 11  -- Small text
+    textLabel.Font = Enum.Font.SourceSans
+    textLabel.Text = "Scrap"
+    textLabel.TextYAlignment = Enum.TextYAlignment.Center
+    textLabel.Parent = billboard
+    
+    -- Store in tracking tables
+    activeESP[scrap] = billboard
+    activeScraps[scrap] = true
+    
+    return billboard
+end
+
+-- Function to remove ESP for a scrap
+local function removeScrapESP(scrap)
+    if activeESP[scrap] then
+        activeESP[scrap]:Destroy()
+        activeESP[scrap] = nil
+        activeScraps[scrap] = nil
+    end
+end
+
+-- Main update function
+local function update()
+    -- Process existing scraps in the folder
+    for _, scrap in ipairs(scrapsFolder:GetChildren()) do
+        if scrap:IsA("BasePart") and not activeScraps[scrap] then
+            createScrapESP(scrap)
+        end
+    end
+    
+    -- Check for scraps that need removal
+    for scrap in pairs(activeScraps) do
+        if not scrap:IsDescendantOf(workspace) or not scrap:IsDescendantOf(scrapsFolder) then
+            removeScrapESP(scrap)
+        end
+    end
+    
+    -- Update distances for visible scraps
+    local character = player.Character
+    local rootPart = character and character:FindFirstChild("HumanoidRootPart")
+    
+    if rootPart then
+        for scrap in pairs(activeScraps) do
+            if activeESP[scrap] and activeESP[scrap].Parent then
+                local distance = math.floor((rootPart.Position - scrap.Position).Magnitude)
+                activeESP[scrap].ESPLabel.Text = string.format("Scrap (%d)", distance)
+            end
+        end
+    end
+end
+
+-- Set up heartbeat loop
+RunService.Heartbeat:Connect(update)
+
+-- Initial scan
+update()
+
+-- Cleanup when player leaves
+player.CharacterRemoving:Connect(function()
+    for scrap in pairs(activeScraps) do
+        removeScrapESP(scrap)
+    end
+end)
+
+-- Handle folder changes
+scrapsFolder.ChildAdded:Connect(function(child)
+    if child:IsA("BasePart") and not activeScraps[child] then
+        createScrapESP(child)
+    end
+end)
+
+scrapsFolder.ChildRemoved:Connect(function(child)
+    if activeScraps[child] then
+        removeScrapESP(child)
+    end
+end)
+
+game:GetService("StarterGui"):SetCore("SendNotification", {
+	Title = "This is [Test] Script";
+	Text = "Yep, Maybe Angry";
+	Duration = 5;
+});
+return 0
+   end,
+})
+
+local Main2Button = Main2Tab:CreateButton({
+   Name = "ESP Kira",
+   Callback = function()
+   local partToHighlight = workspace.Kira
+
+local highlight = Instance.new("Highlight")
+highlight.Parent = partToHighlight
+highlight.FillColor = Color3.fromRGB(255, 21, 21)
+highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+highlight.FillTransparency = 0.60
+highlight.OutlineTransparency = 0
+   end,
+})
+
+local Main3Tab = Window:CreateTab("More", nil) -- Title, Image
+local Main3Section = Main3Tab:CreateSection("Script")
+
+local Main3Button = Main3Tab:CreateButton({
+   Name = "infinite yield",
+   Callback = function()
+     loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+   end,
+})
