@@ -345,3 +345,171 @@ local Main3Button = Main3Tab:CreateButton({
      loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
    end,
 })
+
+local Main3Button = Main3Tab:CreateButton({
+   Name = "Auto Frame (By Qorz Scripting)",
+   Callback = function()
+    --// Universal V1 GUI Script
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local Workspace = game:GetService("Workspace")
+
+--// Create the GUI
+local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
+ScreenGui.Name = "UniversalV1"
+
+-- Animated RGB Function
+local function rgb()
+    local counter = 0
+    return function()
+        counter = counter + 1
+        return Color3.fromHSV((counter % 360) / 360, 1, 1)
+    end
+end
+
+local getColor = rgb()
+
+-- Main Frame
+local MainFrame = Instance.new("Frame", ScreenGui)
+MainFrame.Size = UDim2.new(0, 300, 0, 250)
+MainFrame.Position = UDim2.new(0.5, -150, 0.5, -125)
+MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+MainFrame.BorderSizePixel = 2
+MainFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Visible = true
+
+-- Top Label
+local TitleLabel = Instance.new("TextLabel", MainFrame)
+TitleLabel.Size = UDim2.new(1, 0, 0, 30)
+TitleLabel.Position = UDim2.new(0, 0, 0, 0)
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.Text = "Universal V1"
+TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TitleLabel.Font = Enum.Font.SourceSansBold
+TitleLabel.TextSize = 20
+
+-- Open/Close Button
+local OpenCloseButton = Instance.new("TextButton", ScreenGui)
+OpenCloseButton.Size = UDim2.new(0, 100, 0, 30)
+OpenCloseButton.Position = UDim2.new(0.5, -50, 0.9, 0)
+OpenCloseButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+OpenCloseButton.Text = "Close"
+OpenCloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+OpenCloseButton.Font = Enum.Font.SourceSansBold
+OpenCloseButton.TextSize = 14
+
+-- Loop Fullbright Button
+local FullbrightButton = Instance.new("TextButton", MainFrame)
+FullbrightButton.Size = UDim2.new(0.8, 0, 0.2, 0)
+FullbrightButton.Position = UDim2.new(0.1, 0, 0.2, 0)
+FullbrightButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+FullbrightButton.Text = "Loop Fullbright"
+FullbrightButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+FullbrightButton.Font = Enum.Font.SourceSansBold
+FullbrightButton.TextSize = 14
+
+-- Auto Farm Button
+local AutoFarmButton = Instance.new("TextButton", MainFrame)
+AutoFarmButton.Size = UDim2.new(0.8, 0, 0.2, 0)
+AutoFarmButton.Position = UDim2.new(0.1, 0, 0.45, 0)
+AutoFarmButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+AutoFarmButton.Text = "Auto Farm"
+AutoFarmButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoFarmButton.Font = Enum.Font.SourceSansBold
+AutoFarmButton.TextSize = 14
+
+-- Infinite Jump Button
+local InfiniteJumpButton = Instance.new("TextButton", MainFrame)
+InfiniteJumpButton.Size = UDim2.new(0.8, 0, 0.2, 0)
+InfiniteJumpButton.Position = UDim2.new(0.1, 0, 0.7, 0)
+InfiniteJumpButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+InfiniteJumpButton.Text = "Infinite Jump"
+InfiniteJumpButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+InfiniteJumpButton.Font = Enum.Font.SourceSansBold
+InfiniteJumpButton.TextSize = 14
+
+-- Functions
+-- Loop Fullbright
+local isFullbright = false
+FullbrightButton.MouseButton1Click:Connect(function()
+    isFullbright = not isFullbright
+    FullbrightButton.Text = isFullbright and "Disable Fullbright" or "Loop Fullbright"
+
+    if isFullbright then
+        RunService:BindToRenderStep("Fullbright", Enum.RenderPriority.Last.Value, function()
+            game.Lighting.Ambient = Color3.new(1, 1, 1)
+            game.Lighting.Brightness = 2
+        end)
+    else
+        RunService:UnbindFromRenderStep("Fullbright")
+        game.Lighting.Ambient = Color3.new(0.5, 0.5, 0.5)
+        game.Lighting.Brightness = 1
+    end
+end)
+
+-- Auto Farm
+local isAutoFarming = false
+local previousPosition = nil
+AutoFarmButton.MouseButton1Click:Connect(function()
+    isAutoFarming = not isAutoFarming
+    AutoFarmButton.Text = isAutoFarming and "Disable Auto Farm" or "Auto Farm"
+
+    if isAutoFarming then
+        -- Save the player's current position
+        local character = LocalPlayer.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            previousPosition = character.HumanoidRootPart.Position
+            -- Continuously keep the player 50 studs in the sky
+            RunService:BindToRenderStep("AutoFarm", Enum.RenderPriority.Character.Value, function()
+                if character and character:FindFirstChild("HumanoidRootPart") then
+                    character.HumanoidRootPart.Velocity = Vector3.zero -- Stop falling
+                    character.HumanoidRootPart.CFrame = CFrame.new(previousPosition + Vector3.new(0, 50, 0))
+                end
+            end)
+        end
+    else
+        -- Stop Auto Farming and teleport the player back to their original position
+        RunService:UnbindFromRenderStep("AutoFarm")
+        local character = LocalPlayer.Character
+        if character and character:FindFirstChild("HumanoidRootPart") and previousPosition then
+            character.HumanoidRootPart.CFrame = CFrame.new(previousPosition)
+        end
+        previousPosition = nil
+    end
+end)
+
+-- Infinite Jump
+local isInfiniteJump = false
+InfiniteJumpButton.MouseButton1Click:Connect(function()
+    isInfiniteJump = not isInfiniteJump
+    InfiniteJumpButton.Text = isInfiniteJump and "Disable Infinite Jump" or "Infinite Jump"
+
+    if isInfiniteJump then
+        UserInputService.JumpRequest:Connect(function()
+            LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+        end)
+    end
+end)
+
+-- Open/Close GUI
+local isOpen = true
+OpenCloseButton.MouseButton1Click:Connect(function()
+    isOpen = not isOpen
+    MainFrame.Visible = isOpen
+    OpenCloseButton.Text = isOpen and "Close" or "Open"
+end)
+
+-- RGB Animation
+RunService.RenderStepped:Connect(function()
+    MainFrame.BorderColor3 = getColor()
+    FullbrightButton.BackgroundColor3 = getColor()
+    AutoFarmButton.BackgroundColor3 = getColor()
+    InfiniteJumpButton.BackgroundColor3 = getColor()
+    OpenCloseButton.BackgroundColor3 = getColor()
+end)
+   end,
+})
