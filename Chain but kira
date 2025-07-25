@@ -63,7 +63,7 @@ firesignal(RemoteEvent.OnClientEvent,
     100,
     100
 )
-wait(0.5)
+wait(3)
 end
    end,
 })
@@ -336,17 +336,124 @@ highlight.OutlineTransparency = 0
    end,
 })
 
-local Main3Tab = Window:CreateTab("More", nil) -- Title, Image
-local Main3Section = Main3Tab:CreateSection("Script")
+local Main4Tab = Window:CreateTab("Teleport", nil) -- Title, Image
+local Main4Section = Main4Tab:CreateSection("Part")
 
-local Main3Button = Main3Tab:CreateButton({
-   Name = "infinite yield",
+local Main4Button = Main4Tab:CreateButton({
+   Name = "Workshop",
    Callback = function()
-     loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+     local pl = game.Players.LocalPlayer.Character.HumanoidRootPart
+    local location = CFrame.new(-257.286133, 62.0749893, 669.891846, 0.813478172, -1.28048372e-08, 0.58159548, 1.99865546e-08, 1, -5.93847416e-09, -0.58159548, 1.64549103e-08, 0.813478172)
+    local humanoid = game.Players.LocalPlayer.Character.Humanoid
+    humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+    wait(0.1)
+    pl.CFrame = location
    end,
 })
 
-local Main3Button = Main3Tab:CreateButton({
+local Main4Button = Main4Tab:CreateButton({
+   Name = "PowerPoint",
+   Callback = function()
+     local pl = game.Players.LocalPlayer.Character.HumanoidRootPart
+    local location = CFrame.new(445.675964, 18.25, 564.147949, -0.801124573, -3.98102458e-08, -0.598497629, 4.30014424e-09, 1, -7.22729609e-08, 0.598497629, -6.04732691e-08, -0.801124573)
+    local humanoid = game.Players.LocalPlayer.Character.Humanoid
+    humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+    wait(0.1)
+    pl.CFrame = location
+   end,
+})
+
+local Main4Button = Main4Tab:CreateButton({
+   Name = "Warehouse",
+   Callback = function()
+     local pl = game.Players.LocalPlayer.Character.HumanoidRootPart
+    local location = CFrame.new(436.069641, 22.1289825, 182.937592, 0.959346414, 5.52487556e-10, -0.282231182, -4.41049242e-09, 1, -1.30343585e-08, 0.282231182, 1.37492444e-08, 0.959346414)
+    local humanoid = game.Players.LocalPlayer.Character.Humanoid
+    humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+    wait(0.1)
+    pl.CFrame = location
+   end,
+})
+
+local Main5Tab = Window:CreateTab("Auto Farm", nil) -- Title, Image
+local Main5Section = Main5Tab:CreateSection("Script")
+
+local Main5Button = Main5Tab:CreateButton({
+   Name = "Automatic Scraps (beta ",
+   Callback = function()
+     local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+local folder = workspace.Map.Interactable:FindFirstChild("Scraps")
+
+if not folder then
+    warn("Scraps folder not found!")
+    return
+end
+
+local active = false
+local debounce = false
+
+-- Auto-collect function
+local function collectScrap(scrap)
+    firetouchinterest(player.Character.HumanoidRootPart, scrap, 0) -- Begin touch
+    firetouchinterest(player.Character.HumanoidRootPart, scrap, 1) -- End touch
+    print("Collected scrap:", scrap.Name)
+end
+
+-- Toggle with F5
+UIS.InputBegan:Connect(function(input, gameProcessed)
+    if input.KeyCode == Enum.KeyCode.F5 and not gameProcessed then
+        active = not active
+        print("Script", active and "STARTED" or "STOPPED")
+    end
+end)
+
+while task.wait(1) do
+    if active and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        -- Get valid scraps
+        local scraps = {}
+        for _, item in ipairs(folder:GetChildren()) do
+            if item:IsA("BasePart") then
+                table.insert(scraps, item)
+            end
+        end
+        
+        if #scraps > 0 and not debounce then
+            debounce = true
+            
+            -- Select random scrap
+            local randomScrap = scraps[math.random(#scraps)]
+            
+            -- Teleport to scrap
+            player.Character.HumanoidRootPart.CFrame = randomScrap.CFrame * CFrame.new(0, 3, 0)
+            
+            -- Auto-collect
+            task.wait(0.5) -- Wait for teleport to complete
+            collectScrap(randomScrap)
+            
+            debounce = false
+        end
+    end
+end
+
+game:GetService("StarterGui"):SetCore("SendNotification", {
+	Title = "Click F5 key for start or stop";
+	Text = "WANT SEE THIS!!";
+	Duration = 5;
+});
+return 0
+   end,
+})
+
+local Main5Button = Main5Tab:CreateButton({
+   Name = "Keyboard",
+   Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xxtan31/Ata/main/deltakeyboardcrack.txt", true))()
+   end,
+})
+
+local Main5Button = Main5Tab:CreateButton({
    Name = "Auto Frame (By Qorz Scripting)",
    Callback = function()
     --// Universal V1 GUI Script
@@ -511,5 +618,15 @@ RunService.RenderStepped:Connect(function()
     InfiniteJumpButton.BackgroundColor3 = getColor()
     OpenCloseButton.BackgroundColor3 = getColor()
 end)
+   end,
+})
+
+local Main3Tab = Window:CreateTab("More", nil) -- Title, Image
+local Main3Section = Main3Tab:CreateSection("Script")
+
+local Main3Button = Main3Tab:CreateButton({
+   Name = "infinite yield",
+   Callback = function()
+     loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
    end,
 })
