@@ -306,6 +306,7 @@ firesignal(Remote.OnClientEvent, "You may be banned")
 
 local Main10Button = Main10Tab:CreateButton({
    Name = "INF dodge (No 100% and LAG)",
+   Callback = function()
    while true do
 local player = game:GetService("Players").LocalPlayer
 local playerName = player.Name
