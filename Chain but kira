@@ -339,31 +339,138 @@ end
 
 local Main10button = Main10Tab:CreateButton({
    Name = "Auto XSAW Clash",
-   -- Requires a supported executor
-local mt = getrawmetatable(game)
-local old = mt.__namecall
-setreadonly(mt, false)
+   Callback = function()
+   -- Guaranteed Remote Event Blocker
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 
-mt.__namecall = newcclosure(function(self, ...)
-    local method = getnamecallmethod()
-    local args = {...}
-    
-    -- Block specific remote events
-    if self == workspace.Kira.RemoteEvent then
-        if method == "FireServer" and args[1] == "Fail" then
+-- Create notification UI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Name = "RemoteBlockerUI"
+
+local StatusLabel = Instance.new("TextLabel")
+StatusLabel.Size = UDim2.new(0, 200, 0, 40)
+StatusLabel.Position = UDim2.new(1, -220, 1, -50)
+StatusLabel.BackgroundTransparency = 0.7
+StatusLabel.BackgroundColor3 = Color3.new(0, 0.5, 0)
+StatusLabel.Text = "Remote Blocker: ACTIVE"
+StatusLabel.TextColor3 = Color3.new(1, 1, 1)
+StatusLabel.Font = Enum.Font.SourceSansBold
+StatusLabel.Parent = ScreenGui
+
+-- Core blocking function using network interception
+local function BlockSpecificRemotes()
+    local function isTargetRemote(remote)
+        return remote:IsDescendantOf(workspace) and 
+               remote.Parent and 
+               remote.Parent.Name == "Kira" and 
+               remote.Name == "RemoteEvent"
+    end
+
+    -- Block outgoing "Fail" events
+    local oldFireServer
+    oldFireServer = hookfunction(Instance.new("RemoteEvent").FireServer, function(self, ...)
+        if isTargetRemote(self) and ... == "Fail" then
             print("[Blocked] Fail event")
             return nil
-        elseif method == "InvokeServer" and args[1] == "XSAWClash" then
+        end
+        return oldFireServer(self, ...)
+    end)
+
+    -- Block incoming "XSAWClash" events
+    local oldInvokeServer
+    oldInvokeServer = hookfunction(Instance.new("RemoteEvent").InvokeServer, function(self, ...)
+        if isTargetRemote(self) and ... == "XSAWClash" then
             print("[Blocked] XSAWClash event")
             return nil
         end
-    end
+        return oldInvokeServer(self, ...)
+    end)
+
+    print("Network hooks installed successfully!")
+end
+
+-- Safe execution wrapper
+local success, err = pcall(BlockSpecificRemotes)
+if not success then
+    StatusLabel.Text = "Remote Blocker: ERROR"
+    StatusLabel.BackgroundColor3 = Color3.new(0.8, 0, 0)
+    warn("Blocking failed: " .. err)
     
-    return old(self, ...)
+    -- Fallback method: Destroy the remote if it exists
+    spawn(function()
+        while true do
+            local kira = workspace:FindFirstChild("Kira")
+            if kira then
+                local remote = kira:FindFirstChild("RemoteEvent")
+                if remote then
+                    remote:Destroy()
+                    print("Fallback: RemoteEvent destroyed")
+                end
+            end
+            wait(1)
+        end
+    end)
+end
+
+-- Continuous monitoring system
+spawn(function()
+    while wait(5) do
+        local kira = workspace:FindFirstChild("Kira")
+        if kira then
+            local remote = kira:FindFirstChild("RemoteEvent")
+            if remote then
+                StatusLabel.Text = "Remote : ACTIVE"
+                StatusLabel.BackgroundColor3 = Color3.new(0, 0.5, 0)
+            else
+                StatusLabel.Text = "Auto Clash : Work"
+                StatusLabel.BackgroundColor3 = Color3.new(0.8, 0.8, 0)
+            end
+        else
+            StatusLabel.Text = "Auto Clash : No Work"
+            StatusLabel.BackgroundColor3 = Color3.new(0.5, 0.5, 0.5)
+        end
+    end
 end)
 
-setreadonly(mt, true)
-print("Network hook installed")
+print("Remote blocker initialized successfully!")
+   end,
+})
+
+local Main10Button = Main10Tab:CreateButton({
+   Name = "MacheteTwo God Block (open auto clash)",
+   Callback = function()
+   while true do 
+   local player = game:GetService("Players").LocalPlayer
+local playerName = player.Name
+
+-- Search for your model in workspace
+local playerModel = workspace:FindFirstChild(playerName)
+if playerModel then
+    local weapon = playerModel:FindFirstChild("MacheteTWO")
+    if weapon then
+        local weaponScript = weapon:FindFirstChild("Script")
+        if weaponScript then
+            local remoteEvent = weaponScript:FindFirstChild("RemoteEvent")
+            if remoteEvent then
+                remoteEvent:FireServer("Block")
+                print("Successfully")
+            else
+                warn("RemoteEvent not found in MacheteTWO Script")
+            end
+        else
+            warn("Script not found in MacheteTWO")
+        end
+    else
+        warn("MacheteTWO not found in your workspace model")
+    end
+else
+    warn("Your player model not found in workspace")
+end
+   wait(0)
+   end
    end,
 })
 
