@@ -1,9 +1,9 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "Chain But Kira | Testing Script",
+   Name = "Chain But Kira | Script",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-   LoadingTitle = "JOB APPLICATION",
+   LoadingTitle = "AH YOO, CHILL!!!",
    LoadingSubtitle = "By TRoll",
    Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
@@ -37,8 +37,8 @@ local Window = Rayfield:CreateWindow({
 })
 
 Rayfield:Notify({
-   Title = "This is Test Scrip",
-   Content = "Maybe, l no update the script?",
+   Title = "3V UPDATE!",
+   Content = "maybe, this is last update",
    Duration = 6.5,
    Image = nil,
 })
@@ -63,7 +63,7 @@ firesignal(RemoteEvent.OnClientEvent,
     100,
     100
 )
-wait(3)
+wait(5)
 end
    end,
 })
@@ -120,6 +120,249 @@ end)
 
 -- Initial check
 checkForTool()
+   end,
+})
+
+local MainButton = MainTab:CreateButton({
+   Name = "INF M1911 Ammo",
+   Callback = function()
+   local player = game:GetService("Players").LocalPlayer
+local playerName = player.Name
+
+-- Search for your model in workspace
+local playerModel = workspace:FindFirstChild(playerName)
+if playerModel then
+    local weaponScript = playerModel:FindFirstChild("M1911")
+    if weaponScript then
+        local remoteEvent = weaponScript:FindFirstChild("Script"):FindFirstChild("RemoteEvent")
+        if remoteEvent then
+            remoteEvent:FireServer(table.unpack({
+                [1] = "Shoot",
+                [2] = 99999999,
+            }))
+            print("Successfully")
+        else
+            warn("RemoteEvent not found in M1911")
+        end
+    else
+        warn("M1911 not found in your hand")
+    end
+else
+    warn("Your player model not found in workspace")
+end
+   end,
+})
+
+local MainButton = MainTab:CreateButton({
+   Name = "INF M1911TWO Ammo",
+   Callback = function()
+   local player = game:GetService("Players").LocalPlayer
+local playerName = player.Name
+
+-- Search for your model in workspace
+local playerModel = workspace:FindFirstChild(playerName)
+if playerModel then
+    local weaponScript = playerModel:FindFirstChild("M1911TWO")
+    if weaponScript then
+        local remoteEvent = weaponScript:FindFirstChild("Script"):FindFirstChild("RemoteEvent")
+        if remoteEvent then
+            remoteEvent:FireServer(table.unpack({
+                [1] = "Shoot",
+                [2] = 99999999,
+            }))
+            print("Successfully")
+        else
+            warn("RemoteEvent not found in M1911TWO")
+        end
+    else
+        warn("M1911TWO not found in your hand")
+    end
+else
+    warn("Your player model not found in workspace")
+end
+   end,
+})
+
+local MainButton = MainTab:CreateButton({
+   Name = "INF MakeshiftAK Ammo",
+   Callback = function()
+   local player = game:GetService("Players").LocalPlayer
+local playerName = player.Name
+
+-- Search for your model in workspace
+local playerModel = workspace:FindFirstChild(playerName)
+if playerModel then
+    local weaponScript = playerModel:FindFirstChild("MakeshiftAK")
+    if weaponScript then
+        local remoteEvent = weaponScript:FindFirstChild("Script"):FindFirstChild("RemoteEvent")
+        if remoteEvent then
+            remoteEvent:FireServer(table.unpack({
+                [1] = "Shoot",
+                [2] = 99999999,
+            }))
+            print("Successfully")
+        else
+            warn("RemoteEvent not found in MakeshiftAK")
+        end
+    else
+        warn("MakeshiftAK not found in your hand")
+    end
+else
+    warn("Your player model not found in workspace")
+end
+   end,
+})
+
+local Main10Tab = Window:CreateTab("NO CD", nil) -- Title, Image
+local Main10Section = Main10Tab:CreateSection("yep all is beta")
+
+local Main10Button = Main10Tab:CreateButton({
+   Name = "XSAW inf Chrage (beta)",
+   Callback = function()
+   local charge = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local TextButton = Instance.new("TextButton")
+local UICorner_2 = Instance.new("UICorner")
+
+--Properties:
+charge.Name = "charge"
+charge.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui") -- Better to put in PlayerGui
+charge.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = charge
+Frame.BackgroundColor3 = Color3.fromRGB(85, 85, 85)
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.113149844, 0, 0.089430891, 0)
+Frame.Size = UDim2.new(0, 140, 0, 61)
+Frame.Active = true
+Frame.Draggable = true
+
+UICorner.Parent = Frame
+
+TextButton.Parent = Frame -- Changed parent to Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(131, 131, 131)
+TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Position = UDim2.new(0.1, 0, 0.1, 0) -- Adjusted position
+TextButton.Size = UDim2.new(0, 107, 0, 51)
+TextButton.Font = Enum.Font.SourceSans
+TextButton.Text = "Charge (V)"
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextSize = 41.000
+
+-- Function to execute the charge
+local function executeCharge()
+    local player = game:GetService("Players").LocalPlayer
+    local playerName = player.Name
+
+    -- Search for your model in workspace
+    local playerModel = workspace:FindFirstChild(playerName)
+    if playerModel then
+        local xSawScript = playerModel:FindFirstChild("XSAW")
+        if xSawScript then
+            local remoteEvent = xSawScript:FindFirstChild("Script"):FindFirstChild("RemoteEvent")
+            if remoteEvent then
+                remoteEvent:FireServer("Charge")
+                print("Successfully charged")
+            else
+                warn("RemoteEvent not found in XSAW")
+            end
+        else
+            warn("XSAW not found in your character")
+        end
+    else
+        warn("Your character model not found in workspace")
+    end
+end
+
+-- Connect button click
+TextButton.MouseButton1Down:Connect(executeCharge)
+
+-- Add key press functionality
+local UserInputService = game:GetService("UserInputService")
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed then
+        if input.KeyCode == Enum.KeyCode.V then
+            executeCharge()
+        end
+    end
+end)
+
+UICorner_2.Parent = TextButton
+
+local Remote = game:GetService("ReplicatedStorage").AddNotif
+firesignal(Remote.OnClientEvent, "WARNING!!!!!")
+wait(1)
+local Remote = game:GetService("ReplicatedStorage").AddNotif
+firesignal(Remote.OnClientEvent, "Dont No Try")
+wait(1)
+local Remote = game:GetService("ReplicatedStorage").AddNotif
+firesignal(Remote.OnClientEvent, "You may be banned")
+   end,
+})
+
+local Main10Button = Main10Tab:CreateButton({
+   Name = "INF dodge (No 100% and LAG)",
+   while true do
+local player = game:GetService("Players").LocalPlayer
+local playerName = player.Name
+
+-- Search for your model in workspace
+local playerModel = workspace:FindFirstChild(playerName)
+if playerModel then
+    local ragdollScript = playerModel:FindFirstChild("RagdollScript") -- Case sensitive!
+    if ragdollScript then
+        local remoteEvent = ragdollScript:FindFirstChild("RemoteEvent")
+        if remoteEvent then
+            remoteEvent:FireServer(table.unpack({
+                [1] = "Dodge",
+                [2] = 1,
+            }))
+            print("Successfully!")
+        else
+            warn("RemoteEvent not found in RagdollScript")
+        end
+    else
+        warn("RagdollScript not found in your workspace model")
+    end
+else
+    warn("Your player model not found in workspace")
+end
+wait(0)
+end
+   end,
+})
+
+local Main10button = Main10Tab:CreateButton({
+   Name = "Auto XSAW Clash",
+   -- Requires a supported executor
+local mt = getrawmetatable(game)
+local old = mt.__namecall
+setreadonly(mt, false)
+
+mt.__namecall = newcclosure(function(self, ...)
+    local method = getnamecallmethod()
+    local args = {...}
+    
+    -- Block specific remote events
+    if self == workspace.Kira.RemoteEvent then
+        if method == "FireServer" and args[1] == "Fail" then
+            print("[Blocked] Fail event")
+            return nil
+        elseif method == "InvokeServer" and args[1] == "XSAWClash" then
+            print("[Blocked] XSAWClash event")
+            return nil
+        end
+    end
+    
+    return old(self, ...)
+end)
+
+setreadonly(mt, true)
+print("Network hook installed")
    end,
 })
 
@@ -312,13 +555,6 @@ scrapsFolder.ChildRemoved:Connect(function(child)
         removeScrapESP(child)
     end
 end)
-
-game:GetService("StarterGui"):SetCore("SendNotification", {
-	Title = "This is [Test] Script";
-	Text = "Yep, Maybe Angry";
-	Duration = 5;
-});
-return 0
    end,
 })
 
@@ -379,7 +615,7 @@ local Main5Tab = Window:CreateTab("Auto Farm", nil) -- Title, Image
 local Main5Section = Main5Tab:CreateSection("Script")
 
 local Main5Button = Main5Tab:CreateButton({
-   Name = "Automatic Scraps (beta ",
+   Name = "Automatic Scraps (beta) ",
    Callback = function()
      local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
@@ -437,12 +673,8 @@ while task.wait(1) do
     end
 end
 
-game:GetService("StarterGui"):SetCore("SendNotification", {
-	Title = "Click F5 key for start or stop";
-	Text = "WANT SEE THIS!!";
-	Duration = 5;
-});
-return 0
+local Remote = game:GetService("ReplicatedStorage").AddNotif
+firesignal(Remote.OnClientEvent, "Click F5 For Start")
    end,
 })
 
