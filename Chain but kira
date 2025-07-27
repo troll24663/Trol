@@ -4,7 +4,7 @@ local Window = Rayfield:CreateWindow({
    Name = "Chain But Kira | Script",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
    LoadingTitle = "AH YOO, CHILL!!!",
-   LoadingSubtitle = "By TRoll",
+   LoadingSubtitle = "By ScriptTrol",
    Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
    ToggleUIKeybind = "K", -- The keybind to toggle the UI visibility (string like "K" or Enum.KeyCode)
@@ -217,95 +217,106 @@ local Main10Tab = Window:CreateTab("NO CD", nil) -- Title, Image
 local Main10Section = Main10Tab:CreateSection("yep all is beta")
 
 local Main10Button = Main10Tab:CreateButton({
-   Name = "XSAW inf Chrage (beta)",
+   Name = "XSAW inf Charge",
    Callback = function()
-   local charge = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local UICorner = Instance.new("UICorner")
-local TextButton = Instance.new("TextButton")
-local UICorner_2 = Instance.new("UICorner")
+   local Player = game:GetService("Players").LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
 
---Properties:
-charge.Name = "charge"
-charge.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui") -- Better to put in PlayerGui
-charge.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+-- Function to create the GUI
+local function createChargeGUI()
+    -- Check if GUI already exists
+    if PlayerGui:FindFirstChild("charge") then
+        PlayerGui.charge:Destroy()
+    end
 
-Frame.Parent = charge
-Frame.BackgroundColor3 = Color3.fromRGB(85, 85, 85)
-Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Frame.BorderSizePixel = 0
-Frame.Position = UDim2.new(0.113149844, 0, 0.089430891, 0)
-Frame.Size = UDim2.new(0, 140, 0, 61)
-Frame.Active = true
-Frame.Draggable = true
+    local charge = Instance.new("ScreenGui")
+    local Frame = Instance.new("Frame")
+    local UICorner = Instance.new("UICorner")
+    local TextButton = Instance.new("TextButton")
+    local UICorner_2 = Instance.new("UICorner")
 
-UICorner.Parent = Frame
+    -- GUI setup
+    charge.Name = "charge"
+    charge.Parent = PlayerGui
+    charge.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    charge.ResetOnSpawn = false  -- Crucial for persistence
 
-TextButton.Parent = Frame -- Changed parent to Frame
-TextButton.BackgroundColor3 = Color3.fromRGB(131, 131, 131)
-TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextButton.BorderSizePixel = 0
-TextButton.Position = UDim2.new(0.1, 0, 0.1, 0) -- Adjusted position
-TextButton.Size = UDim2.new(0, 107, 0, 51)
-TextButton.Font = Enum.Font.SourceSans
-TextButton.Text = "Charge (V)"
-TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
-TextButton.TextSize = 41.000
+    Frame.Parent = charge
+    Frame.BackgroundColor3 = Color3.fromRGB(85, 85, 85)
+    Frame.BorderSizePixel = 0
+    Frame.Position = UDim2.new(0.113, 0, 0.089, 0)
+    Frame.Size = UDim2.new(0, 140, 0, 61)
+    Frame.Active = true
+    Frame.Draggable = true
 
--- Function to execute the charge
+    UICorner.Parent = Frame
+
+    TextButton.Parent = Frame
+    TextButton.BackgroundColor3 = Color3.fromRGB(131, 131, 131)
+    TextButton.BorderSizePixel = 0
+    TextButton.Position = UDim2.new(0.1, 0, 0.1, 0)
+    TextButton.Size = UDim2.new(0, 107, 0, 51)
+    TextButton.Font = Enum.Font.SourceSans
+    TextButton.Text = "Charge (V)"
+    TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+    TextButton.TextSize = 25  -- Reduced for better fit
+    UICorner_2.Parent = TextButton
+
+    return charge, TextButton
+end
+
+-- Charge execution function
 local function executeCharge()
-    local player = game:GetService("Players").LocalPlayer
-    local playerName = player.Name
+    local playerModel = workspace:FindFirstChild(Player.Name)
+    if not playerModel then return end
 
-    -- Search for your model in workspace
-    local playerModel = workspace:FindFirstChild(playerName)
-    if playerModel then
-        local xSawScript = playerModel:FindFirstChild("XSAW")
-        if xSawScript then
-            local remoteEvent = xSawScript:FindFirstChild("Script"):FindFirstChild("RemoteEvent")
-            if remoteEvent then
-                remoteEvent:FireServer("Charge")
-                print("Successfully charged")
-            else
-                warn("RemoteEvent not found in XSAW")
-            end
-        else
-            warn("XSAW not found in your character")
-        end
-    else
-        warn("Your character model not found in workspace")
+    local xSawScript = playerModel:FindFirstChild("XSAW")
+    if not xSawScript then return end
+
+    local mainScript = xSawScript:FindFirstChild("Script")
+    if not mainScript then return end
+
+    local remoteEvent = mainScript:FindFirstChild("RemoteEvent")
+    if remoteEvent then
+        remoteEvent:FireServer("Charge")
     end
 end
 
--- Connect button click
-TextButton.MouseButton1Down:Connect(executeCharge)
+-- Main setup
+local chargeGUI, chargeButton = createChargeGUI()
 
--- Add key press functionality
-local UserInputService = game:GetService("UserInputService")
+-- Connect button
+chargeButton.MouseButton1Click:Connect(executeCharge)
 
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if not gameProcessed then
-        if input.KeyCode == Enum.KeyCode.V then
-            executeCharge()
-        end
+-- Keybind setup
+local UIS = game:GetService("UserInputService")
+UIS.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and input.KeyCode == Enum.KeyCode.V then
+        executeCharge()
     end
 end)
 
-UICorner_2.Parent = TextButton
+-- Handle respawns
+Player.CharacterAdded:Connect(function()
+    if not PlayerGui:FindFirstChild("charge") then
+        chargeGUI, chargeButton = createChargeGUI()
+        chargeButton.MouseButton1Click:Connect(executeCharge)
+    end
+end)
 
 local Remote = game:GetService("ReplicatedStorage").AddNotif
 firesignal(Remote.OnClientEvent, "WARNING!!!!!")
-wait(1)
+wait(1.5)
 local Remote = game:GetService("ReplicatedStorage").AddNotif
 firesignal(Remote.OnClientEvent, "Dont No Try")
-wait(1)
+wait(1.5)
 local Remote = game:GetService("ReplicatedStorage").AddNotif
 firesignal(Remote.OnClientEvent, "You may be banned")
    end,
 })
 
 local Main10Button = Main10Tab:CreateButton({
-   Name = "INF dodge (No 100% and LAG)",
+   Name = "INF dodge (No 100%)",
    Callback = function()
    while true do
 local player = game:GetService("Players").LocalPlayer
@@ -340,102 +351,115 @@ end
 local Main10button = Main10Tab:CreateButton({
    Name = "Auto XSAW Clash",
    Callback = function()
-   -- Guaranteed Remote Event Blocker
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
+   local Workspace = game:GetService("Workspace")
 
--- Create notification UI
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
-ScreenGui.Name = "RemoteBlockerUI"
+-- Create blocker UI
+local blockerUI = Instance.new("ScreenGui")
+blockerUI.Name = "RemoteBlockerUI"
+blockerUI.Parent = PlayerGui
+blockerUI.ResetOnSpawn = false
 
 local StatusLabel = Instance.new("TextLabel")
 StatusLabel.Size = UDim2.new(0, 200, 0, 40)
-StatusLabel.Position = UDim2.new(1, -220, 1, -50)
+StatusLabel.Position = UDim2.new(1, -220, 0, 10)  -- Top-right position
 StatusLabel.BackgroundTransparency = 0.7
 StatusLabel.BackgroundColor3 = Color3.new(0, 0.5, 0)
 StatusLabel.Text = "Remote Blocker: ACTIVE"
 StatusLabel.TextColor3 = Color3.new(1, 1, 1)
 StatusLabel.Font = Enum.Font.SourceSansBold
-StatusLabel.Parent = ScreenGui
+StatusLabel.Parent = blockerUI
 
--- Core blocking function using network interception
-local function BlockSpecificRemotes()
-    local function isTargetRemote(remote)
-        return remote:IsDescendantOf(workspace) and 
-               remote.Parent and 
-               remote.Parent.Name == "Kira" and 
-               remote.Name == "RemoteEvent"
+-- Enhanced function to find Kira RemoteEvent
+local function findKiraRemote()
+    local function searchByName()
+        local kira = Workspace:FindFirstChild("Kira")
+        if kira then
+            return kira:FindFirstChild("RemoteEvent")
+        end
+        return nil
     end
+    
+    local function deepSearch()
+        for _, obj in pairs(Workspace:GetDescendants()) do
+            if obj.Name == "RemoteEvent" and obj.Parent and obj.Parent.Name == "Kira" then
+                return obj
+            end
+        end
+        return nil
+    end
+    
+    return searchByName() or deepSearch()
+end
 
-    -- Block outgoing "Fail" events
+-- Core blocking function
+local function BlockSpecificRemotes()
     local oldFireServer
     oldFireServer = hookfunction(Instance.new("RemoteEvent").FireServer, function(self, ...)
-        if isTargetRemote(self) and ... == "Fail" then
-            print("[Blocked] Fail event")
-            return nil
+        if self and self.Parent and self.Parent.Name == "Kira" and self.Name == "RemoteEvent" then
+            if ... == "Fail" then
+                print("[Blocked] Fail event")
+                return nil
+            end
         end
         return oldFireServer(self, ...)
     end)
 
-    -- Block incoming "XSAWClash" events
     local oldInvokeServer
     oldInvokeServer = hookfunction(Instance.new("RemoteEvent").InvokeServer, function(self, ...)
-        if isTargetRemote(self) and ... == "XSAWClash" then
-            print("[Blocked] XSAWClash event")
-            return nil
+        if self and self.Parent and self.Parent.Name == "Kira" and self.Name == "RemoteEvent" then
+            if ... == "XSAWClash" then
+                print("[Blocked] XSAWClash event")
+                return nil
+            end
         end
         return oldInvokeServer(self, ...)
     end)
-
-    print("Network hooks installed successfully!")
 end
 
--- Safe execution wrapper
+-- Fallback protection
+local function startFallbackProtection()
+    while task.wait(1) do
+        local remote = findKiraRemote()
+        if remote and remote:IsDescendantOf(Workspace) then
+            pcall(function()
+                remote:Destroy()
+                print("Fallback: RemoteEvent destroyed")
+            end)
+            
+            if remote.Parent then
+                pcall(function()
+                    remote.FireServer = function() end
+                    remote.InvokeServer = function() end
+                    print("Fallback: RemoteEvent functions disabled")
+                end)
+            end
+        end
+    end
+end
+
+-- Initialize blocker
 local success, err = pcall(BlockSpecificRemotes)
 if not success then
-    StatusLabel.Text = "Remote Blocker: ERROR"
+    StatusLabel.Text = "Using Fallback Protection"
     StatusLabel.BackgroundColor3 = Color3.new(0.8, 0, 0)
-    warn("Blocking failed: " .. err)
-    
-    -- Fallback method: Destroy the remote if it exists
-    spawn(function()
-        while true do
-            local kira = workspace:FindFirstChild("Kira")
-            if kira then
-                local remote = kira:FindFirstChild("RemoteEvent")
-                if remote then
-                    remote:Destroy()
-                    print("Fallback: RemoteEvent destroyed")
-                end
-            end
-            wait(1)
-        end
-    end)
+    task.spawn(startFallbackProtection)
 end
 
--- Continuous monitoring system
-spawn(function()
-    while wait(5) do
-        local kira = workspace:FindFirstChild("Kira")
-        if kira then
-            local remote = kira:FindFirstChild("RemoteEvent")
-            if remote then
-                StatusLabel.Text = "Remote : ACTIVE"
-                StatusLabel.BackgroundColor3 = Color3.new(0, 0.5, 0)
-            else
-                StatusLabel.Text = "Auto Clash : Work"
-                StatusLabel.BackgroundColor3 = Color3.new(0.8, 0.8, 0)
-            end
+-- Monitoring system
+task.spawn(function()
+    while task.wait(3) do
+        local remote = findKiraRemote()
+        if remote then
+            StatusLabel.Text = "Auto Clash: Blocking"
+            StatusLabel.BackgroundColor3 = Color3.new(0, 0.5, 0)
         else
-            StatusLabel.Text = "Auto Clash : No Work"
-            StatusLabel.BackgroundColor3 = Color3.new(0.5, 0.5, 0.5)
+            StatusLabel.Text = "Auto Clash: Inactive"
+            StatusLabel.BackgroundColor3 = Color3.new(0.8, 0.8, 0)
         end
     end
 end)
 
-print("Remote blocker initialized successfully!")
+print("All systems initialized!")
    end,
 })
 
@@ -669,14 +693,89 @@ end)
 local Main2Button = Main2Tab:CreateButton({
    Name = "ESP Kira",
    Callback = function()
-   local partToHighlight = workspace.Kira
+   -- Kira ESP Script
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
-local highlight = Instance.new("Highlight")
-highlight.Parent = partToHighlight
-highlight.FillColor = Color3.fromRGB(255, 21, 21)
-highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
-highlight.FillTransparency = 0.60
-highlight.OutlineTransparency = 0
+local localPlayer = Players.LocalPlayer
+local textSize = 14 -- Adjust text size here
+
+local function createESP(character)
+    -- Create Highlight
+    local highlight = Instance.new("Highlight")
+    highlight.Name = "KiraESP_Highlight"
+    highlight.OutlineColor = Color3.fromRGB(255, 0, 0)
+    highlight.FillColor = Color3.fromRGB(255, 50, 50)
+    highlight.FillTransparency = 0.5
+    highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+    highlight.Parent = character
+
+    -- Create ESP Text
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "KiraESP_Text"
+    billboard.AlwaysOnTop = true
+    billboard.Size = UDim2.new(0, 200, 0, 50)
+    billboard.StudsOffset = Vector3.new(0, 2.5, 0)
+    billboard.Adornee = character:WaitForChild("HumanoidRootPart")
+    billboard.Parent = character
+
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Name = "ESPInfo"
+    textLabel.BackgroundTransparency = 1
+    textLabel.Position = UDim2.new(0.5, 0, 0, 0)
+    textLabel.AnchorPoint = Vector2.new(0.5, 0)
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.Font = Enum.Font.SourceSansBold
+    textLabel.TextSize = textSize
+    textLabel.TextColor3 = Color3.new(1, 1, 1)
+    textLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+    textLabel.TextStrokeTransparency = 0
+    textLabel.TextYAlignment = Enum.TextYAlignment.Top
+    textLabel.Parent = billboard
+
+    return highlight, textLabel
+end
+
+local function main()
+    local kira = workspace:FindFirstChild("Kira")
+    if not kira then
+        warn("Kira not found in workspace")
+        return
+    end
+
+    local humanoid = kira:FindFirstChildOfClass("Humanoid")
+    local rootPart = kira:FindFirstChild("HumanoidRootPart")
+    
+    if not (humanoid and rootPart) then
+        warn("Kira missing humanoid or root part")
+        return
+    end
+
+    local highlight, textLabel = createESP(kira)
+
+    -- Update ESP in real-time
+    RunService.Heartbeat:Connect(function()
+        if not (kira and kira.Parent and humanoid and humanoid.Parent and rootPart and rootPart.Parent) then
+            highlight:Destroy()
+            textLabel.Parent:Destroy()
+            return
+        end
+
+        -- Calculate distance
+        local localRoot = localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart")
+        local distance = localRoot and (localRoot.Position - rootPart.Position).Magnitude or 0
+
+        -- Update text
+        textLabel.Text = string.format("Kira\n%.1f studs", distance)
+    end)
+end
+
+-- Initialization
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+
+main()
    end,
 })
 
