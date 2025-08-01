@@ -3,7 +3,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
    Name = "Chain But Kira | Script",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-   LoadingTitle = "AH YOO, CHILL!!!",
+   LoadingTitle = "Go Go Go",
    LoadingSubtitle = "By ScriptTrol",
    Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
@@ -37,8 +37,8 @@ local Window = Rayfield:CreateWindow({
 })
 
 Rayfield:Notify({
-   Title = "3V UPDATE!",
-   Content = "maybe, this is last update",
+   Title = "4V UPDATE!",
+   Content = "l never update this game",
    Duration = 6.5,
    Image = nil,
 })
@@ -209,6 +209,540 @@ if playerModel then
     end
 else
     warn("Your player model not found in workspace")
+end
+   end,
+})
+
+local Main100Tab = Window:CreateTab("Steal Item", nil) -- Title, Image
+local Main100Section = Main100Tab:CreateSection("you know?, l idk want shar this script lol ")
+
+local Main100Button = Main100Tab:CreateButton({
+   Name = "Steal Gui (F1)",
+   Callback = function()
+   local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local UIS = game:GetService("UserInputService")
+
+-- Debug print function
+local function debugPrint(message)
+    print("[STEAL GUI] " .. message)
+    warn("[STEAL GUI] " .. message)
+end
+
+-- Create main GUI
+debugPrint("Creating GUI elements...")
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "StealGUI"
+screenGui.ResetOnSpawn = false
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+screenGui.Parent = player:WaitForChild("PlayerGui")
+debugPrint("ScreenGui created")
+
+-- Main frame
+local mainFrame = Instance.new("Frame")
+mainFrame.Name = "MainFrame"
+mainFrame.Size = UDim2.new(0, 300, 0, 250)
+mainFrame.Position = UDim2.new(0.5, -150, 0.5, -125)
+mainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+mainFrame.BorderSizePixel = 0
+mainFrame.Active = true
+mainFrame.Selectable = true
+mainFrame.ClipsDescendants = true
+mainFrame.Parent = screenGui
+debugPrint("Main frame created")
+
+-- Title bar
+local titleBar = Instance.new("Frame")
+titleBar.Name = "TitleBar"
+titleBar.Size = UDim2.new(1, 0, 0, 30)
+titleBar.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+titleBar.BorderSizePixel = 0
+titleBar.Parent = mainFrame
+
+local title = Instance.new("TextLabel")
+title.Name = "Title"
+title.Size = UDim2.new(0, 200, 1, 0)
+title.Position = UDim2.new(0, 10, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "ITEM STEALER"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Font = Enum.Font.GothamBold
+title.TextSize = 14
+title.Parent = titleBar
+debugPrint("Title bar created")
+
+-- Player selection
+local playerLabel = Instance.new("TextLabel")
+playerLabel.Name = "PlayerLabel"
+playerLabel.Size = UDim2.new(1, -20, 0, 20)
+playerLabel.Position = UDim2.new(0, 10, 0, 40)
+playerLabel.BackgroundTransparency = 1
+playerLabel.Text = "SELECT PLAYER:"
+playerLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+playerLabel.TextXAlignment = Enum.TextXAlignment.Left
+playerLabel.Font = Enum.Font.Gotham
+playerLabel.TextSize = 12
+playerLabel.Parent = mainFrame
+
+local playerDropdown = Instance.new("TextButton")
+playerDropdown.Name = "PlayerDropdown"
+playerDropdown.Size = UDim2.new(1, -20, 0, 30)
+playerDropdown.Position = UDim2.new(0, 10, 0, 60)
+playerDropdown.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+playerDropdown.BorderSizePixel = 0
+playerDropdown.Font = Enum.Font.Gotham
+playerDropdown.Text = "All Players"
+playerDropdown.TextColor3 = Color3.fromRGB(255, 255, 255) -- FIXED: Changed to white
+playerDropdown.TextSize = 14
+playerDropdown.Parent = mainFrame
+debugPrint("Player dropdown created")
+
+-- Item selection
+local itemLabel = Instance.new("TextLabel")
+itemLabel.Name = "ItemLabel"
+itemLabel.Size = UDim2.new(1, -20, 0, 20)
+itemLabel.Position = UDim2.new(0, 10, 0, 100)
+itemLabel.BackgroundTransparency = 1
+itemLabel.Text = "SELECT ITEM:"
+itemLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+itemLabel.TextXAlignment = Enum.TextXAlignment.Left
+itemLabel.Font = Enum.Font.Gotham
+itemLabel.TextSize = 12
+itemLabel.Parent = mainFrame
+
+local itemDropdown = Instance.new("TextButton")
+itemDropdown.Name = "ItemDropdown"
+itemDropdown.Size = UDim2.new(1, -20, 0, 30)
+itemDropdown.Position = UDim2.new(0, 10, 0, 120)
+itemDropdown.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+itemDropdown.BorderSizePixel = 0
+itemDropdown.Font = Enum.Font.Gotham
+itemDropdown.Text = "Choose Item"
+itemDropdown.TextColor3 = Color3.fromRGB(255, 255, 255) -- FIXED: Changed to white
+itemDropdown.TextSize = 14
+itemDropdown.Parent = mainFrame
+debugPrint("Item dropdown created")
+
+-- Steal button
+local stealButton = Instance.new("TextButton")
+stealButton.Name = "StealButton"
+stealButton.Size = UDim2.new(1, -20, 0, 40)
+stealButton.Position = UDim2.new(0, 10, 1, -50)
+stealButton.BackgroundColor3 = Color3.fromRGB(180, 50, 50)
+stealButton.BorderSizePixel = 0
+stealButton.Font = Enum.Font.GothamBold
+stealButton.Text = "STEAL ITEM"
+stealButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- FIXED: Changed to white
+stealButton.TextSize = 16
+stealButton.Parent = mainFrame
+debugPrint("Steal button created")
+
+-- Status label
+local statusLabel = Instance.new("TextLabel")
+statusLabel.Name = "Status"
+statusLabel.Size = UDim2.new(1, -20, 0, 20)
+statusLabel.Position = UDim2.new(0, 10, 0, 170)
+statusLabel.BackgroundTransparency = 1
+statusLabel.Text = "Ready"
+statusLabel.TextColor3 = Color3.fromRGB(150, 255, 150)
+statusLabel.TextXAlignment = Enum.TextXAlignment.Left
+statusLabel.Font = Enum.Font.Gotham
+statusLabel.TextSize = 12
+statusLabel.Parent = mainFrame
+debugPrint("Status label created")
+
+-- Open/Close button (mobile)
+local openButton = Instance.new("TextButton")
+openButton.Name = "OpenButton"
+openButton.Size = UDim2.new(0, 80, 0, 40)
+openButton.Position = UDim2.new(1, -90, 0, 10)
+openButton.BackgroundColor3 = Color3.fromRGB(30, 30, 180)
+openButton.BorderSizePixel = 0
+openButton.Font = Enum.Font.GothamBold
+openButton.Text = "OPEN"
+openButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- FIXED: Changed to white
+openButton.TextSize = 14
+openButton.Visible = false
+openButton.Parent = screenGui
+debugPrint("Open button created")
+
+-- Device detection
+debugPrint("Detecting device...")
+local isMobile = UIS.TouchEnabled
+debugPrint("Is mobile: " .. tostring(isMobile))
+
+if isMobile then
+    openButton.Visible = true
+    mainFrame.Visible = false
+    debugPrint("Mobile UI initialized")
+else
+    openButton.Visible = false
+    mainFrame.Visible = true
+    debugPrint("PC UI initialized")
+end
+
+-- Player dropdown functionality
+local playerSelection = "All"
+playerDropdown.MouseButton1Click:Connect(function()
+    debugPrint("Player dropdown clicked")
+    
+    -- Destroy existing dropdown if any
+    local existing = mainFrame:FindFirstChild("PlayerSelectionFrame")
+    if existing then
+        existing:Destroy()
+        debugPrint("Removed existing player dropdown")
+    end
+    
+    local selectionGui = Instance.new("Frame")
+    selectionGui.Name = "PlayerSelectionFrame"
+    selectionGui.Size = UDim2.new(1, -20, 0, 150)
+    selectionGui.Position = UDim2.new(0, 10, 0, 60)
+    selectionGui.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    selectionGui.BorderSizePixel = 0
+    selectionGui.ZIndex = 10
+    selectionGui.Parent = mainFrame
+    debugPrint("Player selection frame created")
+
+    local scrollingFrame = Instance.new("ScrollingFrame")
+    scrollingFrame.Size = UDim2.new(1, 0, 1, 0)
+    scrollingFrame.BackgroundTransparency = 1
+    scrollingFrame.ScrollBarThickness = 5
+    scrollingFrame.ZIndex = 10
+    scrollingFrame.Parent = selectionGui
+
+    local layout = Instance.new("UIListLayout")
+    layout.Parent = scrollingFrame
+    layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y)
+    end)
+
+    -- Add "All Players" option
+    local allButton = Instance.new("TextButton")
+    allButton.Size = UDim2.new(1, 0, 0, 30)
+    allButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    allButton.BorderSizePixel = 0
+    allButton.Font = Enum.Font.Gotham
+    allButton.Text = "All Players"
+    allButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- FIXED: Changed to white
+    allButton.TextSize = 14
+    allButton.ZIndex = 10
+    allButton.Parent = scrollingFrame
+
+    allButton.MouseButton1Click:Connect(function()
+        playerSelection = "All"
+        playerDropdown.Text = "All Players"
+        selectionGui:Destroy()
+        debugPrint("Selected: All Players")
+    end)
+
+    -- Add individual players
+    for _, plr in ipairs(Players:GetPlayers()) do
+        if plr ~= player then
+            local playerButton = Instance.new("TextButton")
+            playerButton.Size = UDim2.new(1, 0, 0, 30)
+            playerButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+            playerButton.BorderSizePixel = 0
+            playerButton.Font = Enum.Font.Gotham
+            playerButton.Text = plr.Name
+            playerButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- FIXED: Changed to white
+            playerButton.TextSize = 14
+            playerButton.ZIndex = 10
+            playerButton.Parent = scrollingFrame
+
+            playerButton.MouseButton1Click:Connect(function()
+                playerSelection = plr.Name
+                playerDropdown.Text = plr.Name
+                selectionGui:Destroy()
+                debugPrint("Selected player: " .. plr.Name)
+            end)
+        end
+    end
+end)
+
+-- Item dropdown functionality
+local itemList = {"MakeshiftAK", "XSAW", "Reficul", "CombatKnife", "CombatKnifeTWO", "Angelica", "Beartrap", "BloodBag", "Radio", "Soup's Energy Drink", 
+                 "M1911", "M1911TWO", "MacheteTWO", "Machete", "Vest", "VestTWO", "M67Grenade", "StunGrenade", "Jack'O-Mine", "Tablet"}
+local itemSelection = ""
+
+itemDropdown.MouseButton1Click:Connect(function()
+    debugPrint("Item dropdown clicked")
+    
+    -- Destroy existing dropdown if any
+    local existing = mainFrame:FindFirstChild("ItemSelectionFrame")
+    if existing then
+        existing:Destroy()
+        debugPrint("Removed existing item dropdown")
+    end
+    
+    local selectionGui = Instance.new("Frame")
+    selectionGui.Name = "ItemSelectionFrame"
+    selectionGui.Size = UDim2.new(1, -20, 0, 150)
+    selectionGui.Position = UDim2.new(0, 10, 0, 120)
+    selectionGui.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    selectionGui.BorderSizePixel = 0
+    selectionGui.ZIndex = 10
+    selectionGui.Parent = mainFrame
+    debugPrint("Item selection frame created")
+
+    local scrollingFrame = Instance.new("ScrollingFrame")
+    scrollingFrame.Size = UDim2.new(1, 0, 1, 0)
+    scrollingFrame.BackgroundTransparency = 1
+    scrollingFrame.ScrollBarThickness = 5
+    scrollingFrame.ZIndex = 10
+    scrollingFrame.Parent = selectionGui
+
+    local layout = Instance.new("UIListLayout")
+    layout.Parent = scrollingFrame
+    layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y)
+    end)
+
+    for _, item in ipairs(itemList) do
+        local itemButton = Instance.new("TextButton")
+        itemButton.Size = UDim2.new(1, 0, 0, 30)
+        itemButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+        itemButton.BorderSizePixel = 0
+        itemButton.Font = Enum.Font.Gotham
+        itemButton.Text = item
+        itemButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- FIXED: Changed to white
+        itemButton.TextSize = 14
+        itemButton.ZIndex = 10
+        itemButton.Parent = scrollingFrame
+
+        itemButton.MouseButton1Click:Connect(function()
+            itemSelection = item
+            itemDropdown.Text = item
+            selectionGui:Destroy()
+            debugPrint("Selected item: " .. item)
+        end)
+    end
+end)
+
+-- Steal functionality
+stealButton.MouseButton1Click:Connect(function()
+    debugPrint("Steal button clicked")
+    
+    if itemSelection == "" then
+        debugPrint("No item selected")
+        itemDropdown.Text = "SELECT ITEM FIRST!"
+        task.wait(1.5)
+        itemDropdown.Text = "Choose Item"
+        return
+    end
+    
+    statusLabel.Text = "Stealing " .. itemSelection .. "..."
+    statusLabel.TextColor3 = Color3.fromRGB(255, 255, 150)
+    debugPrint("Attempting to steal: " .. itemSelection)
+    
+    local targetPlayer = nil
+    
+    if playerSelection == "All" then
+        debugPrint("Searching all players for item")
+        for _, plr in ipairs(Players:GetPlayers()) do
+            if plr ~= player and plr.Character then
+                local item = plr.Character:FindFirstChild(itemSelection)
+                if item then
+                    targetPlayer = plr
+                    debugPrint("Found item on player: " .. plr.Name)
+                    break
+                end
+            end
+        end
+    else
+        debugPrint("Targeting specific player: " .. playerSelection)
+        targetPlayer = Players:FindFirstChild(playerSelection)
+    end
+    
+    if targetPlayer then
+        debugPrint("Target player found: " .. targetPlayer.Name)
+        local char = targetPlayer.Character
+        if char then
+            debugPrint("Character found")
+            local item = char:FindFirstChild(itemSelection)
+            if item then
+                debugPrint("Item found in character")
+                
+                -- Make the player drop the item
+                debugPrint("Firing DropItem event")
+                game:GetService("ReplicatedStorage").DropItem:FireServer(item)
+                
+                -- Wait for item to drop
+                task.wait(0.5)
+                debugPrint("Searching for dropped item")
+                
+                -- Find the dropped item
+                local itemsFolder = workspace:FindFirstChild("Items")
+                if itemsFolder then
+                    local droppedItem = nil
+                    
+                    -- Search for the item by name
+                    for _, obj in ipairs(itemsFolder:GetChildren()) do
+                        if obj.Name == itemSelection then
+                            droppedItem = obj
+                            break
+                        end
+                    end
+                    
+                    if droppedItem then
+                        debugPrint("Dropped item found")
+                        -- Pick up the item
+                        game:GetService("ReplicatedStorage").Pickup:FireServer(droppedItem)
+                        statusLabel.Text = "Success! Stole " .. itemSelection
+                        statusLabel.TextColor3 = Color3.fromRGB(150, 255, 150)
+                        debugPrint("Item stolen successfully")
+                    else
+                        statusLabel.Text = "Error: Item not found in workspace"
+                        statusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+                        debugPrint("Dropped item not found")
+                    end
+                else
+                    statusLabel.Text = "Error: Items folder not found"
+                    statusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+                    debugPrint("Items folder not found in workspace")
+                end
+            else
+                statusLabel.Text = "Error: Player doesn't have item"
+                statusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+                debugPrint("Item not found on player")
+            end
+        else
+            statusLabel.Text = "Error: Player character not found"
+            statusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+            debugPrint("Player character not found")
+        end
+    else
+        statusLabel.Text = "Error: Player not found"
+        statusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+        debugPrint("Target player not found")
+    end
+end)
+
+-- Mobile controls
+openButton.MouseButton1Click:Connect(function()
+    debugPrint("Open button clicked")
+    mainFrame.Visible = true
+    openButton.Visible = false
+end)
+
+-- Close button functionality
+local closeButton = Instance.new("TextButton")
+closeButton.Name = "CloseButton"
+closeButton.Size = UDim2.new(0, 30, 0, 30)
+closeButton.Position = UDim2.new(1, -30, 0, 0)
+closeButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+closeButton.BorderSizePixel = 0
+closeButton.Font = Enum.Font.Gotham
+closeButton.Text = "X"
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- FIXED: Changed to white
+closeButton.TextSize = 14
+closeButton.Visible = isMobile
+closeButton.Parent = titleBar
+
+closeButton.MouseButton1Click:Connect(function()
+    debugPrint("Close button clicked")
+    mainFrame.Visible = false
+    openButton.Visible = true
+end)
+
+-- PC controls (F1 toggle)
+if not isMobile then
+    debugPrint("Setting up F1 toggle")
+    UIS.InputBegan:Connect(function(input, processed)
+        if processed then return end
+        
+        if input.KeyCode == Enum.KeyCode.F1 then
+            mainFrame.Visible = not mainFrame.Visible
+            debugPrint("F1 pressed - GUI visible: " .. tostring(mainFrame.Visible))
+        end
+    end)
+end
+
+-- Create a function to make elements draggable
+local function makeDraggable(element, frame)
+    local dragging = false
+    local dragInput, dragStart, startPos
+    
+    element.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = true
+            dragStart = input.Position
+            startPos = frame.Position
+            
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+    
+    element.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            dragInput = input
+        end
+    end)
+    
+    UIS.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - dragStart
+            frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+                                     startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+    end)
+end
+
+-- Make GUI draggable via title bar
+makeDraggable(titleBar, mainFrame)
+
+-- Make open button draggable (mobile only)
+if isMobile then
+    makeDraggable(openButton, openButton)
+    
+    -- Also make the open button text draggable
+    local openText = openButton:FindFirstChildOfClass("TextLabel")
+    if openText then
+        makeDraggable(openText, openButton)
+    end
+end
+
+debugPrint("GUI creation complete")
+   end,
+})
+
+local Main1000Tab = Window:CreateTab("Inf Attack", nil) -- Title, Image
+local Main1000Section = Main1000Tab:CreateSection("Fire🔥🔥")
+
+local Main1000Button = Main1000Tab:CreateButton({
+   Name = "M1911 Attack (hold)",
+   Callback = function()
+   while true do
+   local player = game:GetService("Players").LocalPlayer
+
+-- Search for the player model in workspace
+local playerModel = workspace:FindFirstChild(player.Name)
+if playerModel then
+    local m1911 = playerModel:FindFirstChild("M1911")
+    if m1911 then
+        local toolScript = m1911:FindFirstChild("Script")
+        if toolScript then
+            local remoteEvent = toolScript:FindFirstChild("RemoteEvent")
+            if remoteEvent then
+                remoteEvent:FireServer("Hit")
+                print("Successfully fired M1911 Hit event!")
+            else
+                warn("RemoteEvent not found in M1911 Script")
+            end
+        else
+            warn("Script not found in M1911")
+        end
+    else
+        warn("M1911 not found in your workspace model")
+    end
+else
+    warn("Your player model not found in workspace")
+end
+wait()
 end
    end,
 })
